@@ -34,14 +34,14 @@ module.exports = {
         test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: path.join('assets', 'img', '[name].[contenthash:4][ext]'),
+          filename: 'assets/img/[name].[contenthash:4][ext]',
         },
       },
       {
         test: /\.svg$/,
         type: 'asset', // 'asset/resource'
         generator: {
-          filename: path.join('assets', 'icons', '[name].[contenthash:4][ext]'),
+          filename: 'assets/icons/[name].[contenthash:4][ext]',
         },
         parser: {
           dataUrlCondition: {
@@ -53,7 +53,7 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         type: 'asset/resource',
         generator: {
-          filename: path.join('assets', 'fonts', '[name].[contenthash:4][ext]'),
+          filename: 'assets/fonts/[name].[contenthash:4][ext]',
         },
       },
     ],
