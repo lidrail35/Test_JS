@@ -1,4 +1,11 @@
+@font-face {
+  font-family: "Inika Regular";
+  src: url('./assets/fonts/Inika-Regular.ttf');
+}
+
 .main-header {
   color: blue;
   text-align: center;
+  font-family: "Inika Regular";
+  font-size: 32px;
 }

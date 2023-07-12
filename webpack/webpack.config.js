@@ -4,17 +4,18 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   devServer: {
-    watchFiles: path.join(__dirname, 'src'),
+    watchFiles: path.resolve(__dirname, 'src'),
     open: true,
     hot: true,
     port: 9000,
   },
-  entry: path.join(__dirname, 'src', 'main.js'),
+  entry: path.resolve(__dirname, 'src', 'main.js'),
   output: {
     clean: true,
     filename: '[name].[contenthash:8].js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: path.join('assets/img', '[name].[contenthash:8][ext]'),
+    //assetModuleFilename: path.join('assets/img', '[name].[contenthash:8][ext]'),
+    //assetModuleFilename: path.join('assets/fonts', '[name].[contenthash:8][ext]'),
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -32,18 +33,28 @@ module.exports = {
       {
         test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: path.join('assets', 'img', '[name].[contenthash:4][ext]'),
+        },
       },
       {
         test: /\.svg$/,
         type: 'asset', // 'asset/resource'
         generator: {
-          filename: path.join('icons', '[name].[contenthash][ext]'),
+          filename: path.join('assets', 'icons', '[name].[contenthash:4][ext]'),
         },
         parser: {
           dataUrlCondition: {
               maxSize: 8192 // limit 8 kb
           }
-      }
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: path.join('assets', 'fonts', '[name].[contenthash:4][ext]'),
+        },
       },
     ],
   },
