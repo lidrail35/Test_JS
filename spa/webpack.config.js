@@ -1,65 +1,66 @@
 const path = require('path');
-
-const mode = process.env.NODE_ENV || 'development';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-
-const devMode = mode === 'development';
-const target = devMode ? 'web' : 'browserslist';
-const devtool = devMode ? 'source-map' : undefined;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode,
-  target,
-  devtool,
   devServer: {
-    port: 3000,
+    watchFiles: path.resolve(__dirname, 'src'),
     open: true,
     hot: true,
+    port: 9000,
   },
-  entry: path.resolve(__dirname, 'src', 'index.js'),
+  entry: path.resolve(__dirname, 'src', 'main.ts'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
     clean: true,
-    filename: '[name].js',
-  //   assetModuleFilename: 'assets/[name][ext]'
+    filename: '[name].[contenthash:8].js',
+    path: path.resolve(__dirname, 'dist'),
+    //assetModuleFilename: path.join('assets/img', '[name].[contenthash:8][ext]'),
+    //assetModuleFilename: path.join('assets/fonts', '[name].[contenthash:8][ext]'),
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Test webpack',
       // filename: 'main.html'
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
-/*    new CopyPlugin({
-      patterns: [
-        { from: path.resolve(__dirname, 'src', 'assets/'), to: 'assets/' },
-        // { from: path.resolve(__dirname, 'src', 'assets/sounds'), to: 'assets/sounds' }
-      ],
-    }),*/
+    new MiniCssExtractPlugin()
   ],
   module: {
     rules: [
       {
-        test: /\.html$/i,
-        loader: 'html-loader',
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
-        test: /\.(c|sa|sc)ss$/i,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
+        test: /\.ts$/i,
+        use: 'ts-loader',
       },
       {
-        test: /\.(woff|eot|ttf)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: './assets/font/[name][ext]',
+          filename: 'assets/img/[name].[contenthash:4][ext]',
+        },
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset', // 'asset/resource'
+        generator: {
+          filename: 'assets/icons/[name].[contenthash:4][ext]',
+        },
+        parser: {
+          dataUrlCondition: {
+              maxSize: 8192 // limit 8 kb
+          }
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name].[contenthash:4][ext]',
         },
       },
     ],
   },
+  
 };
