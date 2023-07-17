@@ -17,7 +17,6 @@ npm i -D eslint-webpack-plugin (плагин ESlint - для работы ESlint
       Выключить "module": "commonjs" (т.к. сборкой будет заниматься Webpack)
       Включить "strict": true (требование таски)
       Включить "noImplicitAny": true (требование таски)
-
   ESlint
     В корень добавляем
       "parser": "@typescript-eslint/parser" (чтобы ESlint понимал какой парсер использовать)
