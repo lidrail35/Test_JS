@@ -9,7 +9,7 @@ module.exports = {
     hot: true,
     port: 9000,
   },
-  entry: path.resolve(__dirname, 'src', 'main.js'),
+  entry: path.resolve(__dirname, 'src', 'main.ts'),
   output: {
     clean: true,
     filename: '[name].[contenthash:8].js',
@@ -29,6 +29,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.ts$/i,
+        use: 'ts-loader',
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,

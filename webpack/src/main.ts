@@ -5,7 +5,7 @@ const image = require('./assets/img/houseplant.jpg');
 
 // console.log('Hello, world');
 
-function showElement(text) {
+function showElement(text: string) {
   const element = document.createElement('h2');
   element.textContent = text;
   element.className = 'main-header';
